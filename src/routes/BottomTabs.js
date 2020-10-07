@@ -7,7 +7,7 @@ import Feelings from '../pages/Feelings';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export default function BottomTabs() {
+const BottomTabs = () => {
   return (
     <Navigator
       tabBarOptions={{
@@ -28,7 +28,6 @@ export default function BottomTabs() {
         },
         labelStyle: {
           fontSize: 13,
-          marginLeft: 16,
         },
         inactiveBackgroundColor: '#fafafc',
         activeBackgroundColor: '#ebebf5',
@@ -37,17 +36,17 @@ export default function BottomTabs() {
       }}
     >
       <Screen 
-        name="Dashboard"
-        component={Dashboard}
-        options={{
-          tabBarLabel: 'Home'
-        }}
-      />
-      <Screen 
         name="Previsões"
         component={Predictions}
         options={{
           tabBarLabel: 'Previsões'
+        }}
+      />
+      <Screen 
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Home'
         }}
       />
       <Screen 
@@ -60,3 +59,5 @@ export default function BottomTabs() {
     </Navigator>
   );
 }
+
+export default BottomTabs;

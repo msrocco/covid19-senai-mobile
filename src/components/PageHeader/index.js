@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 50,
     alignItems: 'center',
+    paddingBottom: 20,
+    borderBottomWidth: 1,
   },
 
   title: {

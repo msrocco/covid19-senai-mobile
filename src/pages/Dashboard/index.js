@@ -1,38 +1,24 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Defs, LinearGradient, Stop } from 'react-native-svg';
-// import { LineChart, Grid } from 'react-native-svg-charts';
+import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 
 import Card from '../../components/Card';
 import PageHeader from '../../components/PageHeader';
 
+const screenWidth = Dimensions.get("window").width;
+
 export default function Dashboard() {
   return (
     <>
       <PageHeader title="Dashboard" />
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
         <View style={styles.container}>
-          <Card title="Confirmados no Brasil" amount="4.041.564" />
-          <Card title="Recuperados no Brasil" amount="3.455.659" />
-          <Card title="Óbitos no Brasil" amount="128.891" />
-          {/* <View style={styles.chartContainer}>
-            <LineChart
-              style={{ height: 200, width: '100%' }}
-              data={data}
-              contentInset={{ top: 20, bottom: 20 }}
-              svg={{
-                strokeWidth: 2,
-                stroke: 'url(#gradient)',
-              }}
-            >
-              <Grid />
-              <Gradient />
-            </LineChart>
-          </View> */}
+          <Card title="Confirmados - Brasil" amount="4.041.564" />
+          <Card title="Recuperados - Brasil" amount="3.455.659" />
+          <Card title="Óbitos - Brasil" amount="128.891" />
           <View style={styles.chartContainer}>
             <LineChart
-              style={{ borderRadius: 10 }}
+              style={styles.charts}
               data={{
                 labels: [
                   'January',
@@ -48,8 +34,8 @@ export default function Dashboard() {
                   },
                 ],
               }}
-              width={370}
-              height={260}
+              width={screenWidth * .89}
+              height={300}
               yAxisInterval={1}
               chartConfig={{
                 backgroundColor: '#344675',
@@ -69,10 +55,9 @@ export default function Dashboard() {
                 borderRadius: 10,
               }}
             />
-          </View>
-          <View style={styles.chartContainer}>
+
             <BarChart
-              style={{ borderRadius: 10 }}
+              style={styles.charts}
               data={{
                 labels: [
                   'Masculino',
@@ -84,7 +69,7 @@ export default function Dashboard() {
                   },
                 ],
               }}
-              width={370}
+              width={screenWidth * .89}
               height={260}
               chartConfig={{
                 backgroundColor: '#344675',
@@ -111,6 +96,12 @@ const styles = StyleSheet.create({
   },
 
   chartContainer: {
-    marginVertical: 20,
+    flex: 1,
+    justifyContent: "space-between",
+    margin: 20,
   },
+  charts: {
+    borderRadius: 10,
+    marginVertical: 20
+  }
 });

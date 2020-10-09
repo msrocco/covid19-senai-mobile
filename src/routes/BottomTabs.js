@@ -11,10 +11,15 @@ const BottomTabs = () => {
   return (
     <Navigator
       tabBarOptions={{
+        adaptive: true,
+        labelPosition: 'below-icon',
+        keyboardHidesTabBar: true,
+        allowFontScaling: true,
+        safeAreaInsets: { bottom: 0 },
         style: {
           elevation: 0,
           shadowOpacity: 0,
-          height: 80,
+         
         },
         tabStyle: {
           flexDirection: 'row',
@@ -35,21 +40,21 @@ const BottomTabs = () => {
         activeTintColor: '#32264d',
       }}
     >
-      <Screen 
+      <Screen
         name="Previsões"
         component={Predictions}
         options={{
           tabBarLabel: 'Previsões'
         }}
       />
-      <Screen 
+      <Screen
         name="Dashboard"
         component={Dashboard}
         options={{
           tabBarLabel: 'Home'
         }}
       />
-      <Screen 
+      <Screen
         name="Sentimentos"
         component={Feelings}
         options={{

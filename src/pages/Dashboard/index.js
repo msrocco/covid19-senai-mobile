@@ -6,11 +6,11 @@ import Card from '../../components/Card';
 import PageHeader from '../../components/PageHeader';
 
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 export default function Dashboard() {
   return (
     <>
-      <PageHeader title="Dashboard" />
       <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
         <View style={styles.container}>
           <Card title="Confirmados - Brasil" amount="4.041.564" />
@@ -34,7 +34,7 @@ export default function Dashboard() {
                   },
                 ],
               }}
-              width={screenWidth * .89}
+              width={screenWidth * .895}
               height={300}
               yAxisInterval={1}
               chartConfig={{
@@ -51,11 +51,7 @@ export default function Dashboard() {
                 },
               }}
               bezier
-              style={{
-                borderRadius: 10,
-              }}
             />
-
             <BarChart
               style={styles.charts}
               data={{
@@ -69,7 +65,7 @@ export default function Dashboard() {
                   },
                 ],
               }}
-              width={screenWidth * .89}
+              width={screenWidth * .895}
               height={260}
               chartConfig={{
                 backgroundColor: '#344675',
@@ -91,7 +87,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 0,
+    marginTop: 20,
     margin: 20,
   },
 

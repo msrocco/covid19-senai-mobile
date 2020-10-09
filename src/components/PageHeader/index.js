@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     alignItems: 'center',
     paddingBottom: 20,
-    borderBottomWidth: 1,
+    borderColor: 'transparent', 
+    backgroundColor: '#f5f6fa'  
   },
 
   title: {

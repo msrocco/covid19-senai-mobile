@@ -21,10 +21,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 90,
     marginTop: 20,
-    borderWidth: 1,
+    borderWidth: .5,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: '#ccc',
+    backgroundColor: '#fff'
   },
 
   cardInfo: {
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   cardAmount: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: '500'
   }
 

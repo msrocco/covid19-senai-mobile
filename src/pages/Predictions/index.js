@@ -1,12 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 
 export default function Predictions() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>
-        Tela de previões
-      </Text>
-    </View>
+    <ScrollView>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: 20,
+          marginTop: 50,
+        }}
+      >
+        <Text>Tela de previões</Text>
+      </View>
+    </ScrollView>
   );
 }

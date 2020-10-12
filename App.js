@@ -7,7 +7,7 @@ export default function App() {
   return (
     <>
       <AppStack />
-      <StatusBar backgroundColor="#f5f6fa"  hidden={false} style='dark' />
+      <StatusBar backgroundColor="#f5f6fa" hidden={false} style='dark' />
     </>
   );
 }

@@ -1,16 +1,23 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export default function Card({ title, amount }) {
+import formatValue from '../../utils/formatValue';
+
+export default function Card({ title, amountCountry, amountState }) {
   return (
     <View style={styles.container}>
-      <View style={styles.cardInfo}>
-        <Text>
-          {title}
-        </Text>
-        <Text style={styles.cardAmount}>
-          {amount}
-        </Text>
+      <View style={styles.title}>
+        <Text style={{ fontSize: 18 }}>{title}</Text>
+      </View>
+      <View style={styles.cardContainer}>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: '#6c757d'}}>Paraná</Text>
+          <Text style={styles.cardAmount}>{formatValue(amountState)}</Text>
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: '#6c757d'}}>Brasil</Text>
+          <Text style={styles.cardAmount}>{formatValue(amountCountry)}</Text>
+        </View>
       </View>
     </View>
   );
@@ -21,24 +28,27 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 90,
     marginTop: 20,
-    borderWidth: .5,
+    borderWidth: 0.5,
     borderRadius: 10,
-    alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#ccc',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
 
-  cardInfo: {
+  title: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
+  cardContainer: {
     width: '100%',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-around',
   },
 
   cardAmount: {
-    fontSize: 24,
-    fontWeight: '500'
-  }
-
+    fontSize: 20,
+    fontWeight: '500',
+    marginTop: 2,
+  },
 });

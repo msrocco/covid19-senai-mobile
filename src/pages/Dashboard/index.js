@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import { LineChart, BarChart } from 'react-native-chart-kit';
 
 import Card from '../../components/Card';
-import api from '../../services/api';
+import service from '../../services/ServiceAPI';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -13,15 +13,23 @@ export default function Dashboard() {
   const [totalCountry, setTotalCountry] = useState(0);
 
   useEffect(() => {
-    api.get('api/v1/total/pr/').then((response) => {
-      setTotalState(response.data[0]);
-    });
+    service.getTotalPR()
+      .then(response => {
+        setTotalState(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }, []);
 
   useEffect(() => {
-    api.get('api/v1/total/brazil/').then((response) => {
-      setTotalCountry(response.data[0]);
-    });
+    service.getTotalBrazil()
+      .then(response => {
+        setTotalCountry(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }, []);
 
   return (

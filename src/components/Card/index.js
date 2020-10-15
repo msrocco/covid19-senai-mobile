@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 
 import formatValue from '../../utils/formatValue';
+import paranaFlag from '../../assets/images/parana.png';
+import brasilFlag from '../../assets/images/brasil.png';
 
 export default function Card({ title, amountCountry, amountState }) {
   return (
@@ -11,12 +13,12 @@ export default function Card({ title, amountCountry, amountState }) {
       </View>
       <View style={styles.cardContainer}>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: '#6c757d'}}>Paraná</Text>
-          <Text style={styles.cardAmount}>{formatValue(amountState)}</Text>
+          <Image source={brasilFlag} style={styles.image} />
+          <Text style={styles.cardAmount}>{formatValue(amountCountry)}</Text>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: '#6c757d'}}>Brasil</Text>
-          <Text style={styles.cardAmount}>{formatValue(amountCountry)}</Text>
+          <Image source={paranaFlag} style={styles.image} />
+          <Text style={styles.cardAmount}>{formatValue(amountState)}</Text>
         </View>
       </View>
     </View>
@@ -26,7 +28,7 @@ export default function Card({ title, amountCountry, amountState }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 90,
+    height: 100,
     marginTop: 20,
     borderWidth: 0.5,
     borderRadius: 10,
@@ -40,6 +42,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
+  image: {
+    width: 50,
+    height: 30,
+    borderRadius: 5,
+  },
+
   cardContainer: {
     width: '100%',
     flexDirection: 'row',
@@ -50,5 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     marginTop: 2,
+    marginBottom: 2,
   },
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import Dashboard from '../pages/Dashboard';
 import Predictions from '../pages/Predictions';
@@ -10,7 +11,9 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const BottomTabs = () => {
   return (
     <Navigator
+      initialRouteName="Home"      
       tabBarOptions={{
+        showLabel: false,
         adaptive: true,
         labelPosition: 'below-icon',
         keyboardHidesTabBar: true,
@@ -18,8 +21,7 @@ const BottomTabs = () => {
         safeAreaInsets: { bottom: 0 },
         style: {
           elevation: 0,
-          shadowOpacity: 0,
-         
+          shadowOpacity: 0
         },
         tabStyle: {
           flexDirection: 'row',
@@ -39,14 +41,20 @@ const BottomTabs = () => {
         inactiveTintColor: '#c1bccc',
         activeTintColor: '#32264d',
       }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => {
+          let iconName;
+          if (route.name == 'Dashboard') {
+            iconName = 'home'
+          } else if (route.name == 'Previsões') {
+            iconName = 'chart-line'
+          } else if (route.name == 'Sentimentos') {
+            iconName = 'twitter'
+          }
+          return <FontAwesome5 name={iconName} size={20} color={color} />
+        }
+      })}
     >
-      <Screen
-        name="Previsões"
-        component={Predictions}
-        options={{
-          tabBarLabel: 'Previsões'
-        }}
-      />
       <Screen
         name="Dashboard"
         component={Dashboard}
@@ -59,6 +67,13 @@ const BottomTabs = () => {
         component={Feelings}
         options={{
           tabBarLabel: 'Sentimentos'
+        }}
+      />
+      <Screen
+        name="Previsões"
+        component={Predictions}
+        options={{
+          tabBarLabel: 'Previsões'
         }}
       />
     </Navigator>

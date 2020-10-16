@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 
-import formatValue from '../../utils/formatValue';
 import paranaFlag from '../../assets/images/parana.png';
 import brasilFlag from '../../assets/images/brasil.png';
 
@@ -9,16 +8,16 @@ export default function Card({ title, amountCountry, amountState }) {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Text style={{ fontSize: 18 }}>{title}</Text>
+        <Text style={{ fontSize: 18, color: '#1d253b' }}>{title}</Text>
       </View>
       <View style={styles.cardContainer}>
         <View style={{ alignItems: 'center' }}>
           <Image source={brasilFlag} style={styles.image} />
-          <Text style={styles.cardAmount}>{formatValue(amountCountry)}</Text>
+          <Text style={styles.cardAmount}>{amountCountry}</Text>
         </View>
         <View style={{ alignItems: 'center' }}>
           <Image source={paranaFlag} style={styles.image} />
-          <Text style={styles.cardAmount}>{formatValue(amountState)}</Text>
+          <Text style={styles.cardAmount}>{amountState}</Text>
         </View>
       </View>
     </View>

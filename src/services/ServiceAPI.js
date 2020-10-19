@@ -1,34 +1,39 @@
-import http from "../http-common";
+import http from '../http-common';
 
 const getTotalPR = () => {
-    return http.get("/v1/total/pr/");
+  return http.get('/v1/total/pr/');
 };
 
 const getTotalBrazil = () => {
-    return http.get("/v1/total/brazil/");
+  return http.get('/v1/total/brazil/');
 };
 
 const getGrafico = (filtro) => {
-    return http.get(`/v1/casos/${filtro}`);
+  return http.get(`/v1/casos/${filtro}`);
 };
  
 const getGraficoMortes = (filtro) => {
     return http.get(`/v1/obitos/${filtro}`);
 };
- 
+
 const getGraficoInfectadosPorIdade = () => {
-    return http.get(`/v1/infectadosPorIdade/`);
+  return http.get(`/v1/infectadosPorIdade/`);
 };
- 
+
 const getGraficoInfectadosPorGenero = () => {
-    return http.get(`/v1/infectadosPorGenero/`);
+  return http.get(`/v1/infectadosPorGenero/`);
+};
+
+const getTwitterData = (keyword) => {
+  return http.get(`/v1/twitter/${keyword}`);
 };
 
 export default {
-    getTotalPR,
-    getTotalBrazil,
-    getGrafico,
-    getGraficoMortes,
-    getGraficoInfectadosPorIdade,
-    getGraficoInfectadosPorGenero
+  getTotalPR,
+  getTotalBrazil,
+  getGrafico,
+  getGraficoMortes,
+  getGraficoInfectadosPorIdade,
+  getGraficoInfectadosPorGenero,
+  getTwitterData
 };

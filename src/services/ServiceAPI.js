@@ -11,9 +11,9 @@ const getTotalBrazil = () => {
 const getGrafico = (filtro) => {
   return http.get(`/v1/casos/${filtro}`);
 };
-
-const getGraficoMortes = () => {
-  return http.get(`/v1/obitos/`);
+ 
+const getGraficoMortes = (filtro) => {
+    return http.get(`/v1/obitos/${filtro}`);
 };
 
 const getGraficoInfectadosPorIdade = () => {

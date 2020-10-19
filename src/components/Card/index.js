@@ -9,7 +9,7 @@ export default function Card({ title, amountCountry, amountState }) {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Text style={{ fontSize: 18 }}>{title}</Text>
+        <Text style={{ fontSize: 18, fontFamily: 'Nunito_600SemiBold' }}>{title}</Text>
       </View>
       <View style={styles.cardContainer}>
         <View style={{ alignItems: 'center' }}>

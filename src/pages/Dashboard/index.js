@@ -203,133 +203,129 @@ export default function Dashboard() {
           amountCountry={totalCountry.active}
           amountState={totalState.active}
         />
-        <ScrollView horizontal>
-          {isFetchingDataBigChart ? (
-            <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
-              <ActivityIndicator size="large" color="#1f8ef1" />
-            </View>
-          ) : (
-            <View style={[styles.chartContainer, { marginLeft: 0 }]}>
-              <Text style={styles.viewTitleChart}>Confirmados</Text>
-              <LineChart
-                style={styles.charts}
-                data={chartMain}
-                width={screenWidth * 0.895}
-                height={250}
-                chartConfig={chartConfig}
-                withInnerLines={false}
-                withOuterLines={false}
-                bezier
-                fromZero={true}
-                formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
-                  return retorno;
-                }}
-                yLabelsOffset={15}
-                xLabelsOffset={10}
-              />
-            </View>
-          )}
+        {isFetchingDataBigChart ? (
+          <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+            <ActivityIndicator size="large" color="#1f8ef1" />
+          </View>
+        ) : (
+          <View style={[styles.chartContainer, { marginLeft: 0 }]}>
+            <Text style={styles.viewTitleChart}>Confirmados</Text>
+            <LineChart
+              style={styles.charts}
+              data={chartMain}
+              width={screenWidth * 0.895}
+              height={250}
+              chartConfig={chartConfig}
+              withInnerLines={false}
+              withOuterLines={false}
+              bezier
+              fromZero={true}
+              formatXLabel={function (value, index) {
+                var retorno = moment(value).format('DD-MM');
+                return retorno;
+              }}
+              yLabelsOffset={15}
+              xLabelsOffset={10}
+            />
+          </View>
+        )}
 
-          {isFetchingDataDeathsChart ? (
-            <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
-              <ActivityIndicator size="large" color="#1f8ef1" />
+        {isFetchingDataDeathsChart ? (
+          <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+            <ActivityIndicator size="large" color="#1f8ef1" />
+          </View>
+        ) : (
+          <View style={[styles.chartContainer, { marginRight: 0 }]}>
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Óbitos</Text>
             </View>
-          ) : (
-            <View style={[styles.chartContainer, { marginRight: 0 }]}>
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Óbitos</Text>
-              </View>
-              <LineChart
-                style={styles.charts}
-                data={chartDeaths}
-                width={screenWidth * 0.895}
-                height={250}
-                chartConfig={chartConfig}
-                withInnerLines={false}
-                withOuterLines={false}
-                bezier
-                fromZero={true}
-                formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
-                  return retorno;
-                }}
-                yLabelsOffset={20}
-                xLabelsOffset={10}
-              />
-              <View style={styles.viewTitleChart}>
-                <Text style={[{ fontWeight: 'bold' }, styles.txtChart]}>
-                  Índice de mortalidade:{' '}
-                </Text>
-                <Text style={styles.txtChart}>
-                  {formatValue(chartDeathsData.death_rate).replace(',', '.')}
-                </Text>
-              </View>
+            <LineChart
+              style={styles.charts}
+              data={chartDeaths}
+              width={screenWidth * 0.895}
+              height={250}
+              chartConfig={chartConfig}
+              withInnerLines={false}
+              withOuterLines={false}
+              bezier
+              fromZero={true}
+              formatXLabel={function (value, index) {
+                var retorno = moment(value).format('DD-MM');
+                return retorno;
+              }}
+              yLabelsOffset={20}
+              xLabelsOffset={10}
+            />
+            <View style={styles.viewTitleChart}>
+              <Text style={[{ fontWeight: 'bold' }, styles.txtChart]}>
+                Índice de mortalidade:{' '}
+              </Text>
+              <Text style={styles.txtChart}>
+                {formatValue(chartDeathsData.death_rate).replace(',', '.')}
+              </Text>
             </View>
-          )}
-        </ScrollView>
-        <ScrollView horizontal>
-          {isFetchingDataInfectedByAgeChart ? (
-            <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
-              <ActivityIndicator size="large" color="#1f8ef1" />
+          </View>
+        )}
+        {isFetchingDataInfectedByAgeChart ? (
+          <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+            <ActivityIndicator size="large" color="#1f8ef1" />
+          </View>
+        ) : (
+          <View
+            style={[styles.chartContainer, { marginTop: 0, marginLeft: 0 }]}
+          >
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Infectados por Idade</Text>
             </View>
-          ) : (
-            <View
-              style={[styles.chartContainer, { marginTop: 0, marginLeft: 0 }]}
-            >
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Infectados por Idade</Text>
-              </View>
-              <BarChart
-                style={styles.charts}
-                data={chartInfectedByAge}
-                width={screenWidth * 0.895}
-                height={250}
-                chartConfig={{
-                  backgroundColor: '#ffffff',
-                  backgroundGradientFrom: '#ffffff',
-                  backgroundGradientTo: '#ffffff',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(208, 72, 182, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                }}
-                withInnerLines={false}
-                showValuesOnTopOfBars={true}
-                fromZero={true}
-              />
+            <BarChart
+              style={styles.charts}
+              data={chartInfectedByAge}
+              width={screenWidth * 0.895}
+              height={250}
+              chartConfig={{
+                backgroundColor: '#ffffff',
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(208, 72, 182, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              withInnerLines={false}
+              showValuesOnTopOfBars={true}
+              fromZero={true}
+            />
+          </View>
+        )}
+        {isFetchingDataInfectedByGenreChart ? (
+          <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+            <ActivityIndicator size="large" color="#1f8ef1" />
+          </View>
+        ) : (
+          <View
+            style={[styles.chartContainer, { marginTop: 0, marginRight: 0 }]}
+          >
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Infectados por Gênero</Text>
             </View>
-          )}
-          {isFetchingDataInfectedByGenreChart ? (
-            <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
-              <ActivityIndicator size="large" color="#1f8ef1" />
-            </View>
-          ) : (
-            <View
-              style={[styles.chartContainer, { marginTop: 0, marginRight: 0 }]}
-            >
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Infectados por Gênero</Text>
-              </View>
-              <BarChart
-                style={styles.charts}
-                data={chartInfectedByGenre}
-                width={screenWidth * 0.895}
-                height={250}
-                chartConfig={{
-                  backgroundColor: '#ffffff',
-                  backgroundGradientFrom: '#ffffff',
-                  backgroundGradientTo: '#ffffff',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(0, 214, 180, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                }}
-                withInnerLines={false}
-                showValuesOnTopOfBars={true}
-                fromZero={true}
-              />
-            </View>
-          )}
-        </ScrollView>
+            <BarChart
+              style={styles.charts}
+              data={chartInfectedByGenre}
+              width={screenWidth * 0.895}
+              height={250}
+              chartConfig={{
+                backgroundColor: '#ffffff',
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(0, 214, 180, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              withInnerLines={false}
+              showValuesOnTopOfBars={true}
+              fromZero={true}
+            />
+          </View>
+        )}
         <View style={{ flexDirection: 'column' }}>
           <Text
             style={{
@@ -419,7 +415,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: '#ccc',
-    height: 350,
   },
   charts: {
     marginVertical: 8,

@@ -42,12 +42,12 @@ export default function Feelings() {
         console.log(e);
       });
   }, [item]);
-  // label: 'Selecione um tópico'
+  
   return (
     <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
       <View style={styles.container}>
         <RNPickerSelect
-          placeholder={{ label: 'Selecione um tópico' }}
+          placeholder={{ }}
           Icon={() => <Feather name="chevron-down" size={20} color="#6C6C80" />}
           style={pickerSelect}
           onValueChange={(value) => setItem(value)}

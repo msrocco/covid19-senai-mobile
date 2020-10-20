@@ -45,6 +45,8 @@ export default function Feelings() {
   // label: 'Selecione um tópico'
   return (
     <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
+
+    {/* <ScrollView style={{ backgroundColor: '#f5f6fa' }}> */}
       <View style={styles.container}>
         <RNPickerSelect
           placeholder={{ label: 'Selecione um tópico' }}
@@ -62,8 +64,8 @@ export default function Feelings() {
           <View style={{ width: '100%' }}>
             {tweets.map((tweet, index) => (
               <ListItem
-                key={index}
-                bottomDivider
+                containerStyle={{ borderRadius: 10, marginBottom: 5 }}
+                key={index}                
                 activeOpacity="0.9"
                 onPress={() => handleNavigate(tweet)}
               >
@@ -140,7 +142,7 @@ const pickerSelect = StyleSheet.create({
     height: 60,
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginBottom: 8,
+    marginBottom: 15,
     paddingHorizontal: 24,
   },
   iconContainer: {

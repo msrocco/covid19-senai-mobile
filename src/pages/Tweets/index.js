@@ -5,9 +5,10 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 export default function Tweets({ route }) {
   const { tweet } = route.params;
@@ -25,26 +26,28 @@ export default function Tweets({ route }) {
             navigation.goBack();
           }}
         >
-          <AntDesign name="back" size={25} />
-          <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>
-            Voltar
-          </Text>
+          {Platform.OS === 'android' ?
+            <MaterialIcons name="arrow-back" size={24} color="black" />
+            :
+            <AntDesign name="back" size={25} />
+          }
         </TouchableOpacity>
         <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>
           Tweet
         </Text>
       </View>
       <View style={styles.dataContainer}>
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+        <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
           <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>
-            Data de publicação: {tweet.created_at}
+            Data de publicação:{" "}
           </Text>
+          <Text style={{ fontSize: 16 }}>{tweet.created_at}</Text>
         </View>
         <Text style={styles.tweetText}>{tweet.text}</Text>
-        {/* <View>
-          <Text>Sentimento</Text>
-          <Text>{tweet.sentiment}</Text>
-        </View> */}
+        <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>
+          <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>Sentimento:{" "}</Text>
+          <Text style={{ fontSize: 16 }}>{tweet.sentiment}</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     margin: 20,
-    marginTop: 50,
+    marginTop: Platform.OS === 'ios' ? 50 : 30,
   },
 
   goBackButton: {

@@ -214,7 +214,7 @@ export default function Dashboard() {
               style={styles.charts}
               data={chartMain}
               width={screenWidth * 0.895}
-              height={250}
+              height={220}
               chartConfig={chartConfig}
               withInnerLines={false}
               withOuterLines={false}
@@ -243,7 +243,7 @@ export default function Dashboard() {
               style={styles.charts}
               data={chartDeaths}
               width={screenWidth * 0.895}
-              height={250}
+              height={220}
               chartConfig={chartConfig}
               withInnerLines={false}
               withOuterLines={false}
@@ -281,7 +281,7 @@ export default function Dashboard() {
               style={styles.charts}
               data={chartInfectedByAge}
               width={screenWidth * 0.895}
-              height={250}
+              height={220}
               chartConfig={{
                 backgroundColor: '#ffffff',
                 backgroundGradientFrom: '#ffffff',
@@ -311,7 +311,7 @@ export default function Dashboard() {
               style={styles.charts}
               data={chartInfectedByGenre}
               width={screenWidth * 0.895}
-              height={250}
+              height={220}
               chartConfig={{
                 backgroundColor: '#ffffff',
                 backgroundGradientFrom: '#ffffff',
@@ -414,8 +414,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     backgroundColor: '#fff',
     borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#ccc',
   },
   charts: {
     marginVertical: 8,
@@ -438,8 +436,6 @@ const stylesSpinner = StyleSheet.create({
     margin: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#ccc',
   },
   horizontal: {
     flexDirection: 'row',

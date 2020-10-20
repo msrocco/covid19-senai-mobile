@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Platform
 } from 'react-native';
+import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
@@ -41,7 +42,7 @@ export default function Tweets({ route }) {
           <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>
             Data de publicação:{" "}
           </Text>
-          <Text style={{ fontSize: 16 }}>{tweet.created_at}</Text>
+          <Text style={{ fontSize: 16 }}>{moment(tweet.created_at).format('DD/MM/YYYY')}</Text>
         </View>
         <Text style={styles.tweetText}>{tweet.text}</Text>
         <View style={{ flexDirection: 'row', marginBottom: 10, alignItems: 'center' }}>

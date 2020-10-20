@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Platform
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
@@ -16,7 +10,7 @@ import service from '../../services/ServiceAPI';
 
 const chevronProps = Platform.select({
   android: {
-    size: 20
+    size: 20,
   },
 });
 
@@ -42,14 +36,12 @@ export default function Feelings() {
         console.log(e);
       });
   }, [item]);
-  
+
   return (
     <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
-
-    {/* <ScrollView style={{ backgroundColor: '#f5f6fa' }}> */}
       <View style={styles.container}>
         <RNPickerSelect
-          placeholder={{ }}
+          placeholder={{}}
           Icon={() => <Feather name="chevron-down" size={20} color="#6C6C80" />}
           style={pickerSelect}
           onValueChange={(value) => setItem(value)}
@@ -65,12 +57,18 @@ export default function Feelings() {
             {tweets.map((tweet, index) => (
               <ListItem
                 containerStyle={{ borderRadius: 10, marginBottom: 5 }}
-                key={index}                
+                key={index}
                 activeOpacity="0.9"
                 onPress={() => handleNavigate(tweet)}
               >
                 <View style={styles.listContainer}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      width: '90%',
+                    }}
+                  >
                     <AntDesign
                       name="twitter"
                       size={30}
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 14,
     fontFamily: 'Nunito_600SemiBold',
-  }
+  },
 });
 
 const pickerSelect = StyleSheet.create({

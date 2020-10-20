@@ -8,12 +8,6 @@ import formatValue from '../../utils/formatValue';
 import moment from "moment";
 import { Platform } from "react-native";
 
-let marginTopView = 50;
-
-if (Platform.OS === "android") {
-  marginTopView = 30;
-}
-
 const screenWidth = Dimensions.get('window').width;
 
 export default function Dashboard() {
@@ -347,7 +341,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: marginTopView,
+    marginTop:  Platform.OS === 'ios' ? 50 : 30,
     margin: 20,
   },
   chartContainer: {

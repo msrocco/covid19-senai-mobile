@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  Platform
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -12,6 +13,12 @@ import RNPickerSelect from 'react-native-picker-select';
 import { Feather, AntDesign } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
+
+const chevronProps = Platform.select({
+  android: {
+    size: 20
+  },
+});
 
 export default function Feelings() {
   const { navigate } = useNavigation();
@@ -61,7 +68,7 @@ export default function Feelings() {
                 onPress={() => handleNavigate(tweet)}
               >
                 <View style={styles.listContainer}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
                     <AntDesign
                       name="twitter"
                       size={30}
@@ -71,7 +78,10 @@ export default function Feelings() {
                       {tweet.text}
                     </Text>
                   </View>
-                  <ListItem.Chevron />
+                  <ListItem.Chevron
+                    containerStyle={{ marginRight: 3 }}
+                    {...chevronProps}
+                  />
                 </View>
               </ListItem>
             ))}
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
-    marginTop: 50,
+    marginTop: Platform.OS === 'ios' ? 50 : 30,
   },
 
   listContainer: {
@@ -98,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   tweetText: {
-    flex: 1, 
+    flex: 1,
     marginRight: 5,
     fontSize: 14,
     fontFamily: 'Nunito_600SemiBold',

@@ -208,7 +208,7 @@ export default function Dashboard() {
             <ActivityIndicator size="large" color="#1f8ef1" />
           </View>
         ) : (
-          <View style={[styles.chartContainer, { marginLeft: 0 }]}>
+          <View style={styles.chartContainer}>
             <Text style={styles.viewTitleChart}>Confirmados</Text>
             <LineChart
               style={styles.charts}
@@ -235,7 +235,7 @@ export default function Dashboard() {
             <ActivityIndicator size="large" color="#1f8ef1" />
           </View>
         ) : (
-          <View style={[styles.chartContainer, { marginRight: 0 }]}>
+          <View style={styles.chartContainer}>
             <View style={styles.viewTitleChart}>
               <Text style={styles.txtChart}>Óbitos</Text>
             </View>
@@ -272,7 +272,7 @@ export default function Dashboard() {
           </View>
         ) : (
           <View
-            style={[styles.chartContainer, { marginTop: 0, marginLeft: 0 }]}
+            style={[styles.chartContainer]}
           >
             <View style={styles.viewTitleChart}>
               <Text style={styles.txtChart}>Infectados por Idade</Text>
@@ -302,7 +302,7 @@ export default function Dashboard() {
           </View>
         ) : (
           <View
-            style={[styles.chartContainer, { marginTop: 0, marginRight: 0 }]}
+            style={[styles.chartContainer]}
           >
             <View style={styles.viewTitleChart}>
               <Text style={styles.txtChart}>Infectados por Gênero</Text>
@@ -330,7 +330,7 @@ export default function Dashboard() {
           <Text
             style={{
               marginLeft: 20,
-              marginBottom: 20,
+              marginVertical: 20,
               color: '#1d253b',
               fontSize: 16,
             }}
@@ -411,6 +411,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     margin: 20,
+    marginBottom: 5,
     backgroundColor: '#fff',
     borderRadius: 10,
     borderWidth: 0.5,

@@ -23,8 +23,8 @@ const chevronProps = Platform.select({
 export default function Feelings() {
   const { navigate } = useNavigation();
 
-  const [item, setItem] = useState(null);
-  const [tweets, setTweets] = useState([{}]);
+  const [item, setItem] = useState('covid');
+  const [tweets, setTweets] = useState([]);
 
   function handleNavigate(tweet) {
     navigate('Tweets', {
@@ -42,7 +42,7 @@ export default function Feelings() {
         console.log(e);
       });
   }, [item]);
-
+  // label: 'Selecione um tópico'
   return (
     <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
       <View style={styles.container}>

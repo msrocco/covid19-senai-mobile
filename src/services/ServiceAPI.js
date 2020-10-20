@@ -24,9 +24,9 @@ const getGraficoInfectadosPorGenero = () => {
   return http.get(`/v1/infectadosPorGenero/`);
 };
 
-const getTwitterData = (keyword) => {
-  return http.get(`/v1/twitter/${keyword}`);
-};
+const getTwitterData = (keyword, page) => {
+  return http.get(`/v1/tweets/${keyword}?page=${page}`)
+}
 
 export default {
   getTotalPR,

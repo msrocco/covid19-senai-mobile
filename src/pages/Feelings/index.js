@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Platform,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import { Feather, AntDesign } from '@expo/vector-icons';
@@ -18,7 +28,11 @@ export default function Feelings() {
   const { navigate } = useNavigation();
 
   const [item, setItem] = useState('covid');
+
   const [tweets, setTweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   function handleNavigate(tweet) {
     navigate('Tweets', {
@@ -26,25 +40,84 @@ export default function Feelings() {
     });
   }
 
-  useFocusEffect(() => {
-    service
-      .getTwitterData(item)
-      .then((response) => {
-        setTweets(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  async function loadTweet(pageNumber = page) {
+    if (total && pageNumber > total) {
+      setIsLoading(false);
+      return;
+    }
+
+    const response = await fetch(
+      `https://api-covid19-senai.herokuapp.com/api/v1/tweets/${item}?page=${pageNumber}`
+    );
+
+    const data = await response.json();
+
+    setTotal(Math.floor(data.count / 15));
+    setTweets([...tweets, ...data.results]);
+    setPage(pageNumber + 1);
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadTweet();
   }, [item]);
 
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={{
+          borderRadius: 10,
+          backgroundColor: '#fff',
+          marginBottom: 5,
+          maxWidth: '100%',
+        }}
+        activeOpacity="0.9"
+        onPress={() => handleNavigate(item)}
+      >
+        <View style={[styles.listContainer]}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '90%',
+            }}
+          >
+            <AntDesign name="twitter" size={30} style={{ marginRight: 5 }} />
+            <Text numberOfLines={1} style={styles.tweetText}>
+              {item.text}
+            </Text>
+          </View>
+          <ListItem.Chevron
+            containerStyle={{ marginRight: 3 }}
+            {...chevronProps}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderFooter = () => {
+    return isLoading ? (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" />
+      </View>
+    ) : null;
+  };
+
+  function handleChangeItemSelected(item) {
+    setPage(1);
+    setItem(item);
+    setTweets([]);
+  }
+
   return (
-    <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
+    <SafeAreaView>
       <View style={styles.container}>
         <RNPickerSelect
           placeholder={{}}
           Icon={() => <Feather name="chevron-down" size={20} color="#6C6C80" />}
           style={pickerSelect}
-          onValueChange={(value) => setItem(value)}
+          onValueChange={(value) => handleChangeItemSelected(value)}
           items={[
             { label: 'Covid-19', value: 'covid' },
             { label: 'Coronavírus', value: 'coronavirus' },
@@ -52,43 +125,17 @@ export default function Feelings() {
             { label: 'Pandemia', value: 'pandemia' },
           ]}
         />
-        {tweets && (
-          <View style={{ width: '100%' }}>
-            {tweets.map((tweet, index) => (
-              <ListItem
-                containerStyle={{ borderRadius: 10, marginBottom: 5 }}
-                key={index}
-                activeOpacity="0.9"
-                onPress={() => handleNavigate(tweet)}
-              >
-                <View style={styles.listContainer}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      width: '90%',
-                    }}
-                  >
-                    <AntDesign
-                      name="twitter"
-                      size={30}
-                      style={{ marginRight: 5 }}
-                    />
-                    <Text numberOfLines={1} style={styles.tweetText}>
-                      {tweet.text}
-                    </Text>
-                  </View>
-                  <ListItem.Chevron
-                    containerStyle={{ marginRight: 3 }}
-                    {...chevronProps}
-                  />
-                </View>
-              </ListItem>
-            ))}
-          </View>
-        )}
+        <FlatList
+          data={tweets}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={renderFooter}
+          onEndReached={() => loadTweet()}
+          onEndReachedThreshold={0.1}
+          style={{ marginBottom: 60 }}
+        />
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -97,14 +144,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
-    marginTop: Platform.OS === 'ios' ? 50 : 30,
+    marginTop: Platform.OS === 'ios' ? 10 : 30,
   },
 
   listContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    height: 60,
   },
 
   tweetText: {
@@ -112,6 +161,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 14,
     fontFamily: 'Nunito_600SemiBold',
+  },
+
+  loader: {
+    marginTop: 20,
+    alignItems: 'center',
   },
 });
 

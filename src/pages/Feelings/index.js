@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
-    marginTop: Platform.OS === 'ios' ? 10 : 30,
+    marginTop: Platform.OS === 'ios' ? 12 : 30,
   },
 
   listContainer: {

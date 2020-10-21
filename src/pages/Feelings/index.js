@@ -21,6 +21,8 @@ import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
 import service from '../../services/ServiceAPI';
 
 const screenWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const chevronProps = Platform.select({
   android: {
     size: 20,
@@ -140,7 +142,7 @@ export default function Feelings() {
               width: '90%',
             }}
           >
-            <AntDesign name="twitter" size={30} style={{ marginRight: 5 }} />
+            <AntDesign name="twitter" size={24} style={{ marginRight: 5, marginLeft: 5 }} />
             <Text numberOfLines={1} style={styles.tweetText}>
               {item.text}
             </Text>
@@ -174,7 +176,7 @@ export default function Feelings() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
+    <SafeAreaView style={{ backgroundColor: '#f5f6fa'}}>
       <View style={styles.container}>
         <RNPickerSelect
           placeholder={{}}
@@ -190,49 +192,51 @@ export default function Feelings() {
           useNativeAndroidPickerStyle
           fixAndroidTouchableBug
         />
-        <FlatList
-          data={tweets}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={renderFooter}
-          onEndReached={() => loadTweet()}
-          onEndReachedThreshold={0.1}
-          style={{ marginBottom: 60 }}
-          ListHeaderComponent={
-            <>
-              <View style={styles.chartContainer}>
-                <View style={styles.viewTitleChart}>
-                  <Text style={styles.txtChart}>Análise Gráfica</Text>
-                </View>
-                <PieChart
-                  data={data}
-                  width={screenWidth * 0.895}
-                  height={220}
-                  chartConfig={chartConfig}
-                  style={styles.charts}
-                  accessor="population"
-                  backgroundColor="transparent"
-                  paddingLeft="15"
-                  absolute
-                />
-              </View>
-              <View style={styles.chartContainer}>
-                <View style={styles.viewTitleChart}>
-                  <Text style={styles.txtChart}>Evolução Temporal</Text>
-                </View>
-                <StackedBarChart
-                  data={data1}
-                  style={styles.charts}
-                  width={screenWidth * 0.895}
-                  height={220}
-                  chartConfig={chartConfig}
-                  withHorizontalLabels={false}
-                />
-              </View>
-            </>
-          }
-        />
       </View>
+
+      <FlatList
+        data={tweets}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={renderFooter}
+        onEndReached={() => loadTweet()}
+        onEndReachedThreshold={0.1}
+        style={{ marginBottom: 65, backgroundColor: '#f5f6fa' }}
+        contentContainerStyle={{margin: 20, marginTop: 0}}
+        ListHeaderComponent={
+          <>
+            <View style={styles.chartContainer}>
+              <View style={styles.viewTitleChart}>
+                <Text style={styles.txtChart}>Análise Gráfica</Text>
+              </View>
+              <PieChart
+                data={data}
+                width={screenWidth * 0.895}
+                height={220}
+                chartConfig={chartConfig}
+                style={styles.charts}
+                accessor="population"
+                backgroundColor="transparent"
+                paddingLeft="15"
+                absolute
+              />
+            </View>
+            <View style={styles.chartContainer}>
+              <View style={styles.viewTitleChart}>
+                <Text style={styles.txtChart}>Evolução Temporal</Text>
+              </View>
+              <StackedBarChart
+                data={data1}
+                style={styles.charts}
+                width={screenWidth * 0.895}
+                height={220}
+                chartConfig={chartConfig}
+                withHorizontalLabels={false}
+              />
+            </View>
+          </>
+        }
+      />
     </SafeAreaView>
   );
 }
@@ -241,8 +245,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: Platform.OS === 'ios' ? 12 : 30, 
     margin: 20,
-    marginTop: Platform.OS === 'ios' ? 12 : 30,
   },
 
   listContainer: {
@@ -251,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '100%',
-    height: 60,
+    height: 60,    
   },
 
   tweetText: {
@@ -262,15 +266,14 @@ const styles = StyleSheet.create({
   },
 
   loader: {
-    marginTop: 20, 
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 70,
     alignItems: 'center',
   },
 
   chartContainer: {
     justifyContent: 'center',
     marginBottom: 20,
-    marginLeft: 0,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginTop: 0
@@ -294,12 +297,12 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   viewFooter: {
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignItems: 'flex-start', 
-    marginTop: 20, 
-    marginBottom: 20
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginTop: 20,
+    marginBottom: 70
   }
 });
 
@@ -328,7 +331,6 @@ const pickerSelect = StyleSheet.create({
     height: 60,
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginBottom: 15,
     paddingHorizontal: 24,
   },
   iconContainer: {

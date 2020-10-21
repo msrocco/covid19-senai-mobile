@@ -187,6 +187,8 @@ export default function Feelings() {
             { label: 'Isolamento Social', value: 'isolamento social' },
             { label: 'Pandemia', value: 'pandemia' },
           ]}
+          useNativeAndroidPickerStyle
+          fixAndroidTouchableBug
         />
         <FlatList
           data={tweets}
@@ -260,7 +262,8 @@ const styles = StyleSheet.create({
   },
 
   loader: {
-    marginTop: 20,
+    marginTop: 20, 
+    marginBottom: 20,
     alignItems: 'center',
   },
 

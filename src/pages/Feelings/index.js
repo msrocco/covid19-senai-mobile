@@ -9,20 +9,78 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ActivityIndicator,
+  Dimensions
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
+import { PieChart, StackedBarChart } from 'react-native-chart-kit';
 
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
 
+const screenWidth = Dimensions.get('window').width;
 const chevronProps = Platform.select({
   android: {
     size: 20,
   },
 });
+
+const spinnerProps = Platform.select({
+  android: {
+    size: "large",
+    color: "#1f8ef1"
+  },
+  ios: {
+    size: "large"
+  },
+});
+
+const data = [
+  {
+    name: "Positivo",
+    population: 25,
+    color: "rgba(131, 167, 234, 1)",
+    legendFontColor: "#000",
+    legendFontSize: 15
+  },
+  {
+    name: "Negativo",
+    population: 15,
+    color: "#000",
+    legendFontColor: "#000",
+    legendFontSize: 15
+  },
+  {
+    name: "Neutro",
+    population: 10,
+    color: "red",
+    legendFontColor: "#000",
+    legendFontSize: 15
+  },
+];
+
+const chartConfig = {
+  backgroundGradientFrom: "#fff",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: "#fff",
+  backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  useShadowColorFromDataset: false // optional
+};
+
+const data1 = {
+  labels: ["Setembro", "Outubro", "Novembro"],
+  legend: ["Positivo", "Negativo", "Neutro"],
+  data: [
+    [60, 20, 40],
+    [61, 22, 45],
+    [58, 18, 40]
+  ],
+  barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"]
+};
 
 export default function Feelings() {
   const { navigate } = useNavigation();
@@ -99,9 +157,14 @@ export default function Feelings() {
   const renderFooter = () => {
     return isLoading ? (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator {...spinnerProps} />
       </View>
-    ) : null;
+    ) :
+      <View style={styles.viewFooter}>
+        <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
+        <EvilIcons name="check" size={24} color="black" />
+      </View>
+      ;
   };
 
   function handleChangeItemSelected(item) {
@@ -111,7 +174,7 @@ export default function Feelings() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
       <View style={styles.container}>
         <RNPickerSelect
           placeholder={{}}
@@ -133,6 +196,39 @@ export default function Feelings() {
           onEndReached={() => loadTweet()}
           onEndReachedThreshold={0.1}
           style={{ marginBottom: 60 }}
+          ListHeaderComponent={
+            <>
+              <View style={styles.chartContainer}>
+                <View style={styles.viewTitleChart}>
+                  <Text style={styles.txtChart}>Análise Gráfica</Text>
+                </View>
+                <PieChart
+                  data={data}
+                  width={screenWidth * 0.895}
+                  height={220}
+                  chartConfig={chartConfig}
+                  style={styles.charts}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  absolute
+                />
+              </View>
+              <View style={styles.chartContainer}>
+                <View style={styles.viewTitleChart}>
+                  <Text style={styles.txtChart}>Evolução Temporal</Text>
+                </View>
+                <StackedBarChart
+                  data={data1}
+                  style={styles.charts}
+                  width={screenWidth * 0.895}
+                  height={220}
+                  chartConfig={chartConfig}
+                  withHorizontalLabels={false}
+                />
+              </View>
+            </>
+          }
         />
       </View>
     </SafeAreaView>
@@ -167,6 +263,41 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
+
+  chartContainer: {
+    justifyContent: 'center',
+    marginBottom: 20,
+    marginLeft: 0,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginTop: 0
+  },
+  charts: {
+    marginVertical: 8,
+  },
+  viewTitleChart: {
+    flexDirection: 'row',
+    padding: 10,
+    marginLeft: 10,
+  },
+  txtChart: {
+    color: '#1d253b',
+    fontSize: 16,
+  },
+  txtFooter: {
+    color: '#1d253b',
+    fontSize: 14,
+    fontFamily: 'Nunito_400Regular',
+    marginRight: 5
+  },
+  viewFooter: {
+    flex: 1, 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'flex-start', 
+    marginTop: 20, 
+    marginBottom: 20
+  }
 });
 
 const pickerSelect = StyleSheet.create({

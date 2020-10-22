@@ -43,25 +43,18 @@ const spinnerProps = Platform.select({
 const data = [
   {
     name: 'Positivo',
-    population: 25,
-    color: 'rgba(131, 167, 234, 1)',
+    population: 120,
+    color: 'rgba(131, 220, 225, 1)',
     legendFontColor: '#000',
     legendFontSize: 15,
   },
   {
     name: 'Negativo',
-    population: 15,
-    color: '#000',
+    population: 275,
+    color: 'rgba(86, 143, 254, 1)',
     legendFontColor: '#000',
     legendFontSize: 15,
-  },
-  {
-    name: 'Neutro',
-    population: 10,
-    color: 'red',
-    legendFontColor: '#000',
-    legendFontSize: 15,
-  },
+  }
 ];
 
 const chartConfig = {
@@ -70,19 +63,19 @@ const chartConfig = {
   backgroundGradientTo: '#fff',
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
-  useShadowColorFromDataset: false, // optional
+  strokeWidth: 2,
+  useShadowColorFromDataset: false,
 };
 
 const data1 = {
   labels: ['Setembro', 'Outubro', 'Novembro'],
-  legend: ['Positivo', 'Negativo', 'Neutro'],
+  legend: ['Positivo', 'Negativo'],
   data: [
-    [60, 20, 40],
-    [61, 22, 45],
-    [58, 18, 40],
+    [60, 20],
+    [61, 22],
+    [58, 18],
   ],
-  barColors: ['#dfe4ea', '#ced6e0', '#a4b0be'],
+  barColors: ['#83DCE1', '#568FFE'],
 };
 
 export default function Feelings() {
@@ -110,15 +103,16 @@ export default function Feelings() {
       return;
     }
 
-    const response = await fetch(
-      `https://api-covid19-senai.herokuapp.com/api/v1/tweets/${item}?page=${pageNumber}`
-    );
+    service.getTwitterData(item, pageNumber)
+      .then(response => {
+        setTotal(Math.floor(response.data.count / 15));
+        setTweets([...tweets, ...response.data.results]);
+        setPage(pageNumber + 1);
+      })
+      .catch(e => {
+        console.log(e);
+      });
 
-    const data = await response.json();
-
-    setTotal(Math.floor(data.count / 15));
-    setTweets([...tweets, ...data.results]);
-    setPage(pageNumber + 1);
   }
 
   useEffect(() => {
@@ -174,11 +168,11 @@ export default function Feelings() {
         <ActivityIndicator {...spinnerProps} />
       </View>
     ) : (
-      <View style={styles.viewFooter}>
-        <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
-        <EvilIcons name="check" size={24} color="black" />
-      </View>
-    );
+        <View style={styles.viewFooter}>
+          <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
+          <EvilIcons name="check" size={24} color="black" />
+        </View>
+      );
   };
 
   function handleChangeItemSelected(item) {

@@ -21,7 +21,6 @@ export default function App() {
   return (
     <>
       <AppStack />
-      <StatusBar backgroundColor="#f5f6fa" translucent={false} hidden={false} style='dark'/>
     </>
   );
 }

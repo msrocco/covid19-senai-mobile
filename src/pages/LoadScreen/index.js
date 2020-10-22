@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet, Image, Animated } from 'react-native';
+import { View, StyleSheet, Image, Animated, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import logoImg from '../../assets/images/logo.png';
@@ -22,11 +22,14 @@ export default function LoadScreen() {
   }, [fadeAnim]);
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={{ opacity: fadeAnim }}>
-        <Image source={logoImg} />
-      </Animated.View>
-    </View>
+    <>
+      <StatusBar backgroundColor="#0373ab" hidden={false} translucent/>
+      <View style={styles.container}>
+        <Animated.View style={{ opacity: fadeAnim }}>
+          <Image source={logoImg} />
+        </Animated.View>
+      </View>
+    </>
   );
 }
 

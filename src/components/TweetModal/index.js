@@ -3,17 +3,18 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  TouchableHighlight,
   Animated,
   Dimensions,
   ScrollView,
+  Platform,
 } from 'react-native';
 import moment from 'moment';
+import { AntDesign } from '@expo/vector-icons';
 
 const { height } = Dimensions.get('window');
 
 const Modal = ({ show, close, tweet }) => {
-  console.log(tweet);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
     container: new Animated.Value(height),
@@ -120,9 +121,9 @@ const Modal = ({ show, close, tweet }) => {
           </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.btn} onPress={close}>
-          <Text style={{ color: '#fff' }}>Close</Text>
-        </TouchableOpacity>
+        <TouchableHighlight style={styles.btn} onPress={close} activeOpacity={10}>
+          <AntDesign name="close" size={24} color="black" />
+        </TouchableHighlight>
       </Animated.View>
     </Animated.View>
   );
@@ -138,14 +139,14 @@ const styles = StyleSheet.create({
   modal: {
     bottom: 0,
     position: 'absolute',
-    height: '50%',
+    height: Platform.OS === 'android' ? '60%' : '50%',
     backgroundColor: '#fff',
     width: '100%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingLeft: 25,
     paddingRight: 25,
-    paddingBottom: 60,
+    paddingBottom: Platform.OS === 'android' ? 130 : 60,
   },
   indicator: {
     width: 50,
@@ -165,13 +166,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   btn: {
-    width: '100%',
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: '#0373ab',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 150,
+    backgroundColor: 'transparent'
   },
 });
 

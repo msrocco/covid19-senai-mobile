@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   Platform,
@@ -15,8 +14,6 @@ export default function Tweets({ route }) {
   const { tweet } = route.params;
 
   const navigation = useNavigation();
-
-  // console.log(tweet);
 
   return (
     <View style={styles.container}>

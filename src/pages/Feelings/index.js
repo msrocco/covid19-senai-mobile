@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +19,7 @@ import { PieChart, StackedBarChart } from 'react-native-chart-kit';
 import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
+import Modal from '../../components/TweetModal';
 
 const screenWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -31,57 +32,57 @@ const chevronProps = Platform.select({
 
 const spinnerProps = Platform.select({
   android: {
-    size: "large",
-    color: "#1f8ef1"
+    size: 'large',
+    color: '#1f8ef1',
   },
   ios: {
-    size: "large"
+    size: 'large',
   },
 });
 
 const data = [
   {
-    name: "Positivo",
+    name: 'Positivo',
     population: 25,
-    color: "rgba(131, 167, 234, 1)",
-    legendFontColor: "#000",
-    legendFontSize: 15
+    color: 'rgba(131, 167, 234, 1)',
+    legendFontColor: '#000',
+    legendFontSize: 15,
   },
   {
-    name: "Negativo",
+    name: 'Negativo',
     population: 15,
-    color: "#000",
-    legendFontColor: "#000",
-    legendFontSize: 15
+    color: '#000',
+    legendFontColor: '#000',
+    legendFontSize: 15,
   },
   {
-    name: "Neutro",
+    name: 'Neutro',
     population: 10,
-    color: "red",
-    legendFontColor: "#000",
-    legendFontSize: 15
+    color: 'red',
+    legendFontColor: '#000',
+    legendFontSize: 15,
   },
 ];
 
 const chartConfig = {
-  backgroundGradientFrom: "#fff",
+  backgroundGradientFrom: '#fff',
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#fff",
+  backgroundGradientTo: '#fff',
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   strokeWidth: 2, // optional, default 3
-  useShadowColorFromDataset: false // optional
+  useShadowColorFromDataset: false, // optional
 };
 
 const data1 = {
-  labels: ["Setembro", "Outubro", "Novembro"],
-  legend: ["Positivo", "Negativo", "Neutro"],
+  labels: ['Setembro', 'Outubro', 'Novembro'],
+  legend: ['Positivo', 'Negativo', 'Neutro'],
   data: [
     [60, 20, 40],
     [61, 22, 45],
-    [58, 18, 40]
+    [58, 18, 40],
   ],
-  barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"]
+  barColors: ['#dfe4ea', '#ced6e0', '#a4b0be'],
 };
 
 export default function Feelings() {
@@ -93,6 +94,9 @@ export default function Feelings() {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+
+  const [selectedTweet, setSelectedTweet] = useState({});
+  const [modal, setModal] = useState(false);
 
   function handleNavigate(tweet) {
     navigate('Tweets', {
@@ -132,7 +136,11 @@ export default function Feelings() {
           maxWidth: '100%',
         }}
         activeOpacity="0.9"
-        onPress={() => handleNavigate(item)}
+        // onPress={() => handleNavigate(item)}
+        onPress={() => {
+          setModal(true);
+          setSelectedTweet(item);
+        }}
       >
         <View style={[styles.listContainer]}>
           <View
@@ -142,7 +150,11 @@ export default function Feelings() {
               width: '90%',
             }}
           >
-            <AntDesign name="twitter" size={24} style={{ marginRight: 5, marginLeft: 5 }} />
+            <AntDesign
+              name="twitter"
+              size={24}
+              style={{ marginRight: 5, marginLeft: 5 }}
+            />
             <Text numberOfLines={1} style={styles.tweetText}>
               {item.text}
             </Text>
@@ -161,12 +173,12 @@ export default function Feelings() {
       <View style={styles.loader}>
         <ActivityIndicator {...spinnerProps} />
       </View>
-    ) :
+    ) : (
       <View style={styles.viewFooter}>
         <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
         <EvilIcons name="check" size={24} color="black" />
       </View>
-      ;
+    );
   };
 
   function handleChangeItemSelected(item) {
@@ -176,7 +188,7 @@ export default function Feelings() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#f5f6fa'}}>
+    <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
       <View style={styles.container}>
         <RNPickerSelect
           placeholder={{}}
@@ -202,7 +214,7 @@ export default function Feelings() {
         onEndReached={() => loadTweet()}
         onEndReachedThreshold={0.1}
         style={{ marginBottom: 65, backgroundColor: '#f5f6fa' }}
-        contentContainerStyle={{margin: 20, marginTop: 0}}
+        contentContainerStyle={{ margin: 20, marginTop: 0 }}
         ListHeaderComponent={
           <>
             <View style={styles.chartContainer}>
@@ -237,6 +249,8 @@ export default function Feelings() {
           </>
         }
       />
+
+      <Modal show={modal} close={() => setModal(false)} tweet={selectedTweet} />
     </SafeAreaView>
   );
 }
@@ -245,7 +259,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Platform.OS === 'ios' ? 12 : 30, 
+    marginTop: Platform.OS === 'ios' ? 12 : 30,
     margin: 20,
   },
 
@@ -255,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '100%',
-    height: 60,    
+    height: 60,
   },
 
   tweetText: {
@@ -276,7 +290,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginTop: 0
+    marginTop: 0,
   },
   charts: {
     marginVertical: 8,
@@ -289,13 +303,13 @@ const styles = StyleSheet.create({
   txtChart: {
     color: '#1d253b',
     fontSize: 16,
-    fontFamily: 'Nunito_400Regular'
+    fontFamily: 'Nunito_400Regular',
   },
   txtFooter: {
     color: '#1d253b',
     fontSize: 14,
     fontFamily: 'Nunito_400Regular',
-    marginRight: 5
+    marginRight: 5,
   },
   viewFooter: {
     flex: 1,
@@ -303,8 +317,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginTop: 20,
-    marginBottom: 70
-  }
+    marginBottom: 70,
+  },
 });
 
 const pickerSelect = StyleSheet.create({

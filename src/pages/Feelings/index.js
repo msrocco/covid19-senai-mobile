@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
   txtChart: {
     color: '#1d253b',
     fontSize: 16,
+    fontFamily: 'Nunito_400Regular'
   },
   txtFooter: {
     color: '#1d253b',
@@ -326,6 +327,7 @@ const pickerSelect = StyleSheet.create({
     paddingHorizontal: 24,
     fontSize: 16,
     color: '#000000',
+    fontFamily: 'Nunito_600SemiBold',
   },
   viewContainer: {
     height: 60,

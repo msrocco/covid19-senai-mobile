@@ -20,11 +20,11 @@ const screenWidth = Dimensions.get('window').width;
 
 const spinnerProps = Platform.select({
   android: {
-    size: "large",
-    color: "#1f8ef1"
+    size: 'large',
+    color: '#1f8ef1',
   },
   ios: {
-    size: "large"
+    size: 'large',
   },
 });
 
@@ -218,124 +218,126 @@ export default function Dashboard() {
             <ActivityIndicator {...spinnerProps} />
           </View>
         ) : (
-            <View style={styles.chartContainer}>
-              <Text style={styles.viewTitleChart}>Confirmados</Text>
-              <LineChart
-                style={styles.charts}
-                data={chartMain}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={chartConfig}
-                withInnerLines={false}
-                withOuterLines={false}
-                bezier
-                fromZero={true}
-                formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
-                  return retorno;
-                }}
-                yLabelsOffset={15}
-                xLabelsOffset={10}
-              />
-            </View>
-          )}
+          <View style={styles.chartContainer}>
+            <Text style={styles.viewTitleChart}>Confirmados</Text>
+            <LineChart
+              style={styles.charts}
+              data={chartMain}
+              width={screenWidth * 0.895}
+              height={220}
+              chartConfig={chartConfig}
+              withInnerLines={false}
+              withOuterLines={false}
+              bezier
+              fromZero={true}
+              formatXLabel={function (value, index) {
+                var retorno = moment(value).format('DD-MM');
+                return retorno;
+              }}
+              yLabelsOffset={15}
+              xLabelsOffset={10}
+            />
+          </View>
+        )}
 
         {isFetchingDataDeathsChart ? (
           <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
             <ActivityIndicator {...spinnerProps} />
           </View>
         ) : (
-            <View style={styles.chartContainer}>
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Óbitos</Text>
-              </View>
-              <LineChart
-                style={styles.charts}
-                data={chartDeaths}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={chartConfig}
-                withInnerLines={false}
-                withOuterLines={false}
-                bezier
-                fromZero={true}
-                formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
-                  return retorno;
-                }}
-                yLabelsOffset={20}
-                xLabelsOffset={10}
-              />
-              <View style={styles.viewTitleChart}>
-                <Text style={[{ fontWeight: 'bold' }, styles.txtChart]}>
-                  Índice de mortalidade:{' '}
-                </Text>
-                <Text style={styles.txtChart}>
-                  {formatValue(chartDeathsData.death_rate).replace(',', '.')}
-                </Text>
-              </View>
+          <View style={styles.chartContainer}>
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Óbitos</Text>
             </View>
-          )}
+            <LineChart
+              style={styles.charts}
+              data={chartDeaths}
+              width={screenWidth * 0.895}
+              height={220}
+              chartConfig={chartConfig}
+              withInnerLines={false}
+              withOuterLines={false}
+              bezier
+              fromZero={true}
+              formatXLabel={function (value, index) {
+                var retorno = moment(value).format('DD-MM');
+                return retorno;
+              }}
+              yLabelsOffset={20}
+              xLabelsOffset={10}
+            />
+            <View style={styles.viewTitleChart}>
+              <Text
+                style={{
+                  fontFamily: 'Nunito_700Bold',
+                  color: '#1d253b',
+                  fontSize: 16,
+                }}
+              >
+                Índice de mortalidade:{' '}
+              </Text>
+              <Text style={styles.txtChart}>
+                {formatValue(chartDeathsData.death_rate).replace(',', '.')}
+              </Text>
+            </View>
+          </View>
+        )}
         {isFetchingDataInfectedByAgeChart ? (
           <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
             <ActivityIndicator {...spinnerProps} />
           </View>
         ) : (
-            <View
-              style={[styles.chartContainer]}
-            >
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Infectados por Idade</Text>
-              </View>
-              <BarChart
-                style={styles.charts}
-                data={chartInfectedByAge}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={{
-                  backgroundColor: '#ffffff',
-                  backgroundGradientFrom: '#ffffff',
-                  backgroundGradientTo: '#ffffff',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(208, 72, 182, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                }}
-                withInnerLines={false}
-                showValuesOnTopOfBars={true}
-                fromZero={true}
-              />
+          <View style={[styles.chartContainer]}>
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Infectados por Idade</Text>
             </View>
-          )}
+            <BarChart
+              style={styles.charts}
+              data={chartInfectedByAge}
+              width={screenWidth * 0.895}
+              height={220}
+              chartConfig={{
+                backgroundColor: '#ffffff',
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(208, 72, 182, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              withInnerLines={false}
+              showValuesOnTopOfBars={true}
+              fromZero={true}
+            />
+          </View>
+        )}
         {isFetchingDataInfectedByGenreChart ? (
           <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
             <ActivityIndicator {...spinnerProps} />
           </View>
         ) : (
-            <View
-              style={[styles.chartContainer]}
-            >
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Infectados por Gênero</Text>
-              </View>
-              <BarChart
-                style={styles.charts}
-                data={chartInfectedByGenre}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={{
-                  backgroundColor: '#ffffff',
-                  backgroundGradientFrom: '#ffffff',
-                  backgroundGradientTo: '#ffffff',
-                  decimalPlaces: 2,
-                  color: (opacity = 1) => `rgba(0, 214, 180, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                }}
-                withInnerLines={false}
-                showValuesOnTopOfBars={true}
-                fromZero={true}
-              />
+          <View style={[styles.chartContainer]}>
+            <View style={styles.viewTitleChart}>
+              <Text style={styles.txtChart}>Infectados por Gênero</Text>
             </View>
-          )}
+            <BarChart
+              style={styles.charts}
+              data={chartInfectedByGenre}
+              width={screenWidth * 0.895}
+              height={220}
+              chartConfig={{
+                backgroundColor: '#ffffff',
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(0, 214, 180, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              withInnerLines={false}
+              showValuesOnTopOfBars={true}
+              fromZero={true}
+            />
+          </View>
+        )}
         <View style={{ flexDirection: 'column' }}>
           <Text
             style={{
@@ -343,23 +345,24 @@ export default function Dashboard() {
               marginVertical: 20,
               color: '#1d253b',
               fontSize: 16,
+              fontFamily: 'Nunito_600SemiBold'
             }}
           >
             Informações
           </Text>
           <Text
-            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20 }}
+            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20, fontFamily: 'Nunito_400Regular' }}
           >
             {' '}
             Os dados apresentados nos gráficos são referentes a cidade de
             Londrina, PR - Brasil.
           </Text>
           <Text
-            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20 }}
+            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20, fontFamily: 'Nunito_400Regular' }}
           >
             O número de casos confirmados e óbitos são oriundos dos boletins da{' '}
             <Text
-              style={{ color: '#adb5bd', fontWeight: 'bold' }}
+              style={{ color: '#adb5bd', fontFamily: 'Nunito_700Bold' }}
               onPress={() => {
                 Linking.openURL(
                   'https://www.saude.pr.gov.br/Pagina/Coronavirus-COVID-19'
@@ -372,11 +375,11 @@ export default function Dashboard() {
           </Text>
 
           <Text
-            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20 }}
+            style={{ color: '#1d253b', textAlign: 'justify', marginBottom: 20, fontFamily: 'Nunito_400Regular' }}
           >
             Dados de infectados por idade e por gênero são oriundos do sistema{' '}
             <Text
-              style={{ color: '#adb5bd', fontWeight: 'bold' }}
+              style={{ color: '#adb5bd', fontFamily: 'Nunito_700Bold' }}
               onPress={() => {
                 Linking.openURL(
                   'https://opendatasus.saude.gov.br/dataset/casos-nacionais'
@@ -397,6 +400,7 @@ export default function Dashboard() {
               textAlign: 'justify',
               marginLeft: 15,
               fontSize: 12,
+              fontFamily: 'Nunito_400Regular'
             }}
           >
             &#8226; Estes dados não são referentes ao número total de casos
@@ -432,10 +436,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     marginLeft: 10,
+    fontSize: 16,
+    fontFamily: 'Nunito_600SemiBold',
   },
   txtChart: {
     color: '#1d253b',
     fontSize: 16,
+    fontFamily: 'Nunito_600SemiBold',
   },
 });
 

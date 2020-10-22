@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   Platform,
   FlatList,
   TouchableOpacity,
@@ -12,17 +11,16 @@ import {
   Dimensions,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import { Modalize } from 'react-native-modalize';
 import RNPickerSelect from 'react-native-picker-select';
 import { PieChart, StackedBarChart } from 'react-native-chart-kit';
 
 import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
-import Modal from '../../components/TweetModal';
+import TweetModal from '../../components/TweetModal';
 
 const screenWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const chevronProps = Platform.select({
   android: {
@@ -54,7 +52,7 @@ const data = [
     color: 'rgba(86, 143, 254, 1)',
     legendFontColor: '#000',
     legendFontSize: 15,
-  }
+  },
 ];
 
 const chartConfig = {
@@ -79,8 +77,6 @@ const data1 = {
 };
 
 export default function Feelings() {
-  const { navigate } = useNavigation();
-
   const [item, setItem] = useState('covid');
 
   const [tweets, setTweets] = useState([]);
@@ -89,13 +85,12 @@ export default function Feelings() {
   const [total, setTotal] = useState(0);
 
   const [selectedTweet, setSelectedTweet] = useState({});
-  const [modal, setModal] = useState(false);
 
-  function handleNavigate(tweet) {
-    navigate('Tweets', {
-      tweet,
-    });
-  }
+  const modalizeRef = useRef(null);
+
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
 
   async function loadTweet(pageNumber = page) {
     if (total && pageNumber > total) {
@@ -103,16 +98,16 @@ export default function Feelings() {
       return;
     }
 
-    service.getTwitterData(item, pageNumber)
-      .then(response => {
+    service
+      .getTwitterData(item, pageNumber)
+      .then((response) => {
         setTotal(Math.floor(response.data.count / 15));
         setTweets([...tweets, ...response.data.results]);
         setPage(pageNumber + 1);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
-
   }
 
   useEffect(() => {
@@ -130,9 +125,8 @@ export default function Feelings() {
           maxWidth: '100%',
         }}
         activeOpacity="0.9"
-        // onPress={() => handleNavigate(item)}
         onPress={() => {
-          setModal(true);
+          onOpen();
           setSelectedTweet(item);
         }}
       >
@@ -168,11 +162,11 @@ export default function Feelings() {
         <ActivityIndicator {...spinnerProps} />
       </View>
     ) : (
-        <View style={styles.viewFooter}>
-          <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
-          <EvilIcons name="check" size={24} color="black" />
-        </View>
-      );
+      <View style={styles.viewFooter}>
+        <Text style={styles.txtFooter}>Tweets carregados com sucesso</Text>
+        <EvilIcons name="check" size={24} color="black" />
+      </View>
+    );
   };
 
   function handleChangeItemSelected(item) {
@@ -244,7 +238,10 @@ export default function Feelings() {
         }
       />
 
-      <Modal show={modal} close={() => setModal(false)} tweet={selectedTweet} />
+      <Modalize ref={modalizeRef} snapPoint={500}>
+        <TweetModal tweet={selectedTweet} />
+      </Modalize>
+
     </SafeAreaView>
   );
 }

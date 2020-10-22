@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   title: {
     alignItems: 'center',
     marginBottom: 10,
+    fontFamily: 'Nunito_600SemiBold'
   },
 
   image: {
@@ -53,8 +54,8 @@ const styles = StyleSheet.create({
 
   cardAmount: {
     fontSize: 20,
-    fontWeight: '500',
     marginTop: 2,
     marginBottom: 2,
+    fontFamily: 'Nunito_600SemiBold'
   },
 });

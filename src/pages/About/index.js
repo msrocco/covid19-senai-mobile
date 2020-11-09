@@ -10,7 +10,7 @@ import maleAvatar from '../../assets/images/anime1.png';
 export default function About() {
   return (
     <>
-      <View style={{ backgroundColor: '#f5f6fa', flex: 0, height: 40 }}>
+      <View style={{ backgroundColor: '#f5f6fa', flex: 0, height: 45 }}>
         <StatusBar
           backgroundColor="#f5f6fa"
           translucent={false}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
-    marginTop: 20,
+    marginTop: 15,
   },
 
   cardContainer: {

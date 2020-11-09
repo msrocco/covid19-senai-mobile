@@ -23,7 +23,7 @@ export default function LoadScreen() {
 
   return (
     <>
-      <StatusBar backgroundColor="#0373ab" hidden={false} translucent/>
+      <StatusBar backgroundColor="#0373ab" hidden={true} translucent/>
       <View style={styles.container}>
         <Animated.View style={{ opacity: fadeAnim }}>
           <Image source={logoImg} />

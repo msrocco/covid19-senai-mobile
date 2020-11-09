@@ -5,6 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Dashboard from '../pages/Dashboard';
 import Predictions from '../pages/Predictions';
 import Feelings from '../pages/Feelings';
+import About from '../pages/About';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -49,7 +50,9 @@ const BottomTabs = () => {
           } else if (route.name == 'Previsões') {
             iconName = 'chart-line'
           } else if (route.name == 'Sentimentos') {
-            iconName = 'twitter'
+           iconName = 'twitter'
+          } else if (route.name == 'Sobre') {
+            iconName = 'info-circle'
           }
           return <FontAwesome5 name={iconName} size={20} color={color} />
         }
@@ -74,6 +77,13 @@ const BottomTabs = () => {
         component={Predictions}
         options={{
           tabBarLabel: 'Previsões'
+        }}
+      />
+      <Screen
+        name="Sobre"
+        component={About}
+        options={{
+          tabBarLabel: 'Sobre'
         }}
       />
     </Navigator>

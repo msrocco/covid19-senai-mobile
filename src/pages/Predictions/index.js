@@ -1,19 +1,30 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Predictions() {
   return (
-    <ScrollView>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: 20,
-          marginTop: 50,
-        }}
-      >
-        <Text>Tela de previões</Text>
+    <>
+      <View style={{ backgroundColor: '#f5f6fa', flex: 0, height: 40 }}>
+        <StatusBar
+          backgroundColor="#f5f6fa"
+          translucent={false}
+          hidden={false}
+          style="dark"
+        />
       </View>
-    </ScrollView>
+      <ScrollView style={{ backgroundColor: '#f5f6fa' }}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 20,
+            marginTop: 0,
+          }}
+        >
+          <Text>Tela de previões</Text>
+        </View>
+      </ScrollView>
+    </>
   );
 }

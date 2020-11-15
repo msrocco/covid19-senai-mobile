@@ -193,7 +193,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <View style={{ backgroundColor: '#f5f6fa', flex: 0, height: 45 }}>
+      <View style={{ backgroundColor: '#f5f6fa', flex: 0, height: Platform.OS === 'ios' ? 45 : 0 }}>
         <StatusBar
           backgroundColor="#f5f6fa"
           translucent={false}

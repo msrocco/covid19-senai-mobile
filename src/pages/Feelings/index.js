@@ -248,7 +248,7 @@ export default function Feelings() {
                   style={styles.charts}
                   accessor="population"
                   backgroundColor="transparent"
-                  paddingLeft="15"
+                  paddingLeft={Platform.OS === 'ios' ? '15' : '0'}
                   absolute
                 />
               </View>

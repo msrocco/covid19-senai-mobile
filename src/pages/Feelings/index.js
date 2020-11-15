@@ -12,10 +12,9 @@ import {
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Modalize } from 'react-native-modalize';
-import RNPickerSelect from 'react-native-picker-select';
 import { PieChart, StackedBarChart } from 'react-native-chart-kit';
 
-import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
+import { AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
 import TweetModal from '../../components/TweetModal';
@@ -209,7 +208,7 @@ export default function Feelings() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
+    <SafeAreaView style={{ backgroundColor: '#f5f6fa', flex: 1 }}>
       <Select
         onValueChange={(value) => handleChangeItemSelected(value)}
         items={[
@@ -226,7 +225,7 @@ export default function Feelings() {
         ListFooterComponent={renderFooter}
         onEndReached={() => loadTweet()}
         onEndReachedThreshold={0.1}
-        style={{ marginBottom: 65, backgroundColor: '#f5f6fa' }}
+        style={{ marginBottom: 0, backgroundColor: '#f5f6fa' }}
         contentContainerStyle={{ margin: 20, marginTop: 0 }}
         ListHeaderComponent={
           <>
@@ -276,7 +275,7 @@ export default function Feelings() {
         }
       />
 
-      <Modalize ref={modalizeRef} snapPoint={500}>
+      <Modalize ref={modalizeRef} snapPoint={500} modalTopOffset={100}>
         <TweetModal tweet={selectedTweet} />
       </Modalize>
     </SafeAreaView>
@@ -342,8 +341,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginTop: 20,
-    marginBottom: 70,
+    marginVertical: 20
   },
 });
 

@@ -153,7 +153,7 @@ export default function Predictions() {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
+    <SafeAreaView style={{ backgroundColor: '#f5f6fa', flex: 1 }}>
       <Select
         onValueChange={(value) => handleChangeTag(value)}
         items={[

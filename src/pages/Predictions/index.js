@@ -192,6 +192,7 @@ export default function Predictions() {
                 yLabelsOffset={25}
                 xLabelsOffset={10}
                 withShadow={false}
+                verticalLabelRotation={-20}
               />
               <View style={styles.viewLegenda}>
                 <View
@@ -250,6 +251,7 @@ export default function Predictions() {
                 yLabelsOffset={12}
                 xLabelsOffset={10}
                 withShadow={false}
+                verticalLabelRotation={-20}
               />
               <View style={styles.viewLegenda}>
                 <View

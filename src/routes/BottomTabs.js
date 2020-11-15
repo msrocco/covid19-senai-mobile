@@ -21,6 +21,7 @@ const BottomTabs = () => {
         allowFontScaling: true,
         safeAreaInsets: { bottom: 0 },
         style: {
+          height: 65,
           elevation: 0,
           shadowOpacity: 0
         },

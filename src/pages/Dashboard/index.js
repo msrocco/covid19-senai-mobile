@@ -229,7 +229,7 @@ export default function Dashboard() {
             </View>
           ) : (
             <View style={styles.chartContainer}>
-              <Text style={styles.viewTitleChart}>Confirmados</Text>
+              <Text style={styles.viewTitleChart}>Confirmados (Londrina)</Text>
               <LineChart
                 style={styles.charts}
                 data={chartMain}
@@ -241,10 +241,14 @@ export default function Dashboard() {
                 bezier
                 fromZero={true}
                 formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
+                  var retorno = moment(value).format('DD/MM');
                   return retorno;
                 }}
-                yLabelsOffset={15}
+                formatYLabel={function (value, index) {
+                  var retorno = Math.round(value);
+                  return retorno;
+                }}
+                yLabelsOffset={25}
                 xLabelsOffset={10}
               />
             </View>
@@ -257,7 +261,7 @@ export default function Dashboard() {
           ) : (
             <View style={styles.chartContainer}>
               <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Óbitos</Text>
+                <Text style={styles.txtChart}>Óbitos (Londrina)</Text>
               </View>
               <LineChart
                 style={styles.charts}
@@ -270,10 +274,14 @@ export default function Dashboard() {
                 bezier
                 fromZero={true}
                 formatXLabel={function (value, index) {
-                  var retorno = moment(value).format('DD-MM');
+                  var retorno = moment(value).format('DD/MM');
                   return retorno;
                 }}
-                yLabelsOffset={20}
+                formatYLabel={function (value, index) {
+                  var retorno = Math.round(value);
+                  return retorno;
+                }}
+                yLabelsOffset={30}
                 xLabelsOffset={10}
               />
               <View style={styles.viewTitleChart}>
@@ -284,7 +292,7 @@ export default function Dashboard() {
                     fontSize: 16,
                   }}
                 >
-                  Índice de mortalidade:{' '}
+                  Média do índice de mortalidade:{' '}
                 </Text>
                 <Text style={styles.txtChart}>
                   {formatValue(chartDeathsData.death_rate).replace(',', '.')}

@@ -19,6 +19,7 @@ import { Feather, AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import service from '../../services/ServiceAPI';
 import TweetModal from '../../components/TweetModal';
+import Select from '../../components/Select';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -38,23 +39,6 @@ const spinnerProps = Platform.select({
   },
 });
 
-const data = [
-  {
-    name: 'Positivo',
-    population: 120,
-    color: 'rgba(131, 220, 225, 1)',
-    legendFontColor: '#000',
-    legendFontSize: 15,
-  },
-  {
-    name: 'Negativo',
-    population: 275,
-    color: 'rgba(86, 143, 254, 1)',
-    legendFontColor: '#000',
-    legendFontSize: 15,
-  },
-];
-
 const chartConfig = {
   backgroundGradientFrom: '#fff',
   backgroundGradientFromOpacity: 0,
@@ -65,26 +49,20 @@ const chartConfig = {
   useShadowColorFromDataset: false,
 };
 
-const data1 = {
-  labels: ['Setembro', 'Outubro', 'Novembro'],
-  legend: ['Positivo', 'Negativo'],
-  data: [
-    [60, 20],
-    [61, 22],
-    [58, 18],
-  ],
-  barColors: ['#83DCE1', '#568FFE'],
-};
-
 export default function Feelings() {
   const [item, setItem] = useState('covid');
 
   const [tweets, setTweets] = useState([]);
+  const [selectedTweet, setSelectedTweet] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const [selectedTweet, setSelectedTweet] = useState({});
+  const [pieChartData, setPieChartData] = useState('covid');
+  const [isFetchingPieChartData, setIsFetchingPieChartData] = useState(true);
+
+  const [barChartData, setBarChartData] = useState('covid');
+  const [isFetchingBarChartData, setIsFetchingBarChartData] = useState(true);
 
   const modalizeRef = useRef(null);
 
@@ -109,6 +87,61 @@ export default function Feelings() {
         console.log(e);
       });
   }
+
+  useEffect(() => {
+    service
+      .getGraficoAnalise(item)
+      .then((response) => {
+        let data = [
+          {
+            name: response.data.labels[0],
+            population: response.data.dataset.data[0],
+            color: 'rgba(131, 220, 225, 1)',
+            legendFontColor: '#000',
+            legendFontSize: 15,
+          },
+          {
+            name: response.data.labels[1],
+            population: response.data.dataset.data[1],
+            color: 'rgba(86, 143, 254, 1)',
+            legendFontColor: '#000',
+            legendFontSize: 15,
+          },
+        ];
+        setPieChartData(data);
+        setIsFetchingPieChartData(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [item]);
+
+  useEffect(() => {
+    service
+      .getGraficoEvolucaoTemporal(item)
+      .then((response) => {
+        let data = {
+          labels: response.data.labels,
+          legend: ['Positivo', 'Negativo'],
+          data: [
+            [
+              response.data.dataset[0].data[0],
+              response.data.dataset[1].data[0],
+            ],
+            [
+              response.data.dataset[0].data[1],
+              response.data.dataset[1].data[1],
+            ],
+          ],
+          barColors: ['#83DCE1', '#568FFE'],
+        };
+        setBarChartData(data);
+        setIsFetchingBarChartData(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [item]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -177,23 +210,15 @@ export default function Feelings() {
 
   return (
     <SafeAreaView style={{ backgroundColor: '#f5f6fa' }}>
-      <View style={styles.container}>
-        <RNPickerSelect
-          placeholder={{}}
-          Icon={() => <Feather name="chevron-down" size={20} color="#6C6C80" />}
-          style={pickerSelect}
-          onValueChange={(value) => handleChangeItemSelected(value)}
-          items={[
-            { label: 'Covid-19', value: 'covid' },
-            { label: 'Coronavírus', value: 'coronavirus' },
-            { label: 'Isolamento Social', value: 'isolamento social' },
-            { label: 'Pandemia', value: 'pandemia' },
-          ]}
-          useNativeAndroidPickerStyle
-          fixAndroidTouchableBug
-        />
-      </View>
-
+      <Select
+        onValueChange={(value) => handleChangeItemSelected(value)}
+        items={[
+          { label: 'Covid-19', value: 'covid' },
+          { label: 'Coronavírus', value: 'coronavirus' },
+          { label: 'Isolamento Social', value: 'isolamento social' },
+          { label: 'Pandemia', value: 'pandemia' },
+        ]}
+      />
       <FlatList
         data={tweets}
         renderItem={renderItem}
@@ -205,35 +230,48 @@ export default function Feelings() {
         contentContainerStyle={{ margin: 20, marginTop: 0 }}
         ListHeaderComponent={
           <>
-            <View style={styles.chartContainer}>
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Análise Gráfica</Text>
+            {isFetchingPieChartData ? (
+              <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+                <ActivityIndicator {...spinnerProps} />
               </View>
-              <PieChart
-                data={data}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={chartConfig}
-                style={styles.charts}
-                accessor="population"
-                backgroundColor="transparent"
-                paddingLeft="15"
-                absolute
-              />
-            </View>
-            <View style={styles.chartContainer}>
-              <View style={styles.viewTitleChart}>
-                <Text style={styles.txtChart}>Evolução Temporal</Text>
+            ) : (
+              <View style={styles.chartContainer}>
+                <View style={styles.viewTitleChart}>
+                  <Text style={styles.txtChart}>Análise Gráfica</Text>
+                </View>
+
+                <PieChart
+                  data={pieChartData}
+                  width={screenWidth * 0.895}
+                  height={220}
+                  chartConfig={chartConfig}
+                  style={styles.charts}
+                  accessor="population"
+                  backgroundColor="transparent"
+                  paddingLeft="15"
+                  absolute
+                />
               </View>
-              <StackedBarChart
-                data={data1}
-                style={styles.charts}
-                width={screenWidth * 0.895}
-                height={220}
-                chartConfig={chartConfig}
-                withHorizontalLabels={false}
-              />
-            </View>
+            )}
+            {isFetchingBarChartData ? (
+              <View style={[stylesSpinner.container, stylesSpinner.horizontal]}>
+                <ActivityIndicator {...spinnerProps} />
+              </View>
+            ) : (
+              <View style={styles.chartContainer}>
+                <View style={styles.viewTitleChart}>
+                  <Text style={styles.txtChart}>Evolução Temporal</Text>
+                </View>
+                <StackedBarChart
+                  data={barChartData}
+                  style={styles.charts}
+                  width={screenWidth * 0.895}
+                  height={220}
+                  chartConfig={chartConfig}
+                  withHorizontalLabels={false}
+                />
+              </View>
+            )}
           </>
         }
       />
@@ -241,7 +279,6 @@ export default function Feelings() {
       <Modalize ref={modalizeRef} snapPoint={500}>
         <TweetModal tweet={selectedTweet} />
       </Modalize>
-
     </SafeAreaView>
   );
 }
@@ -250,8 +287,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Platform.OS === 'ios' ? 12 : 30,
-    margin: 20,
   },
 
   listContainer: {
@@ -312,35 +347,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const pickerSelect = StyleSheet.create({
-  placeholder: {
-    fontSize: 18,
-    color: '#6C6C80',
-  },
-  inputIOS: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 8,
-    paddingHorizontal: 24,
-    fontFamily: 'Nunito_600SemiBold',
-    fontSize: 16,
-  },
-  inputAndroid: {
-    height: 60,
-    borderRadius: 10,
-    marginBottom: 8,
-    paddingHorizontal: 24,
-    fontSize: 16,
-    color: '#000000',
-    fontFamily: 'Nunito_600SemiBold',
-  },
-  viewContainer: {
-    height: 60,
+const stylesSpinner = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    margin: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
-    paddingHorizontal: 24,
   },
-  iconContainer: {
-    padding: 20,
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
 });

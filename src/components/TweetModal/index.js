@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
 
 const TweetModal = ({tweet}) => {
+  console.log(tweet);
   return (
     <View style={styles.container}>
       <View style={styles.dataContainer}>

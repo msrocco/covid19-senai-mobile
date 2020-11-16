@@ -162,8 +162,9 @@ export default function Predictions() {
     setTag(name.split(',')[0]);
     setDailyTag(name.split(',')[1]);
 
-    name.split(',')[2] === undefined ? setHideChart(true) : setHideChart(false);
-    setDeathTag(name.split(',')[2]);
+    name.split(',')[2] === undefined 
+      ? setHideChart(true) 
+      : setHideChart(false); setDeathTag(name.split(',')[2]);
   };
 
   const DeathChart = () => {

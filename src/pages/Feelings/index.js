@@ -69,7 +69,7 @@ export default function Feelings() {
     modalizeRef.current?.open();
   };
 
-  async function loadTweet(pageNumber = page) {
+  function loadTweet(pageNumber = page) {
     if (total && pageNumber > total) {
       setIsLoading(false);
       return;
@@ -102,6 +102,13 @@ export default function Feelings() {
           {
             name: response.data.labels[1],
             population: response.data.dataset.data[1],
+            color: 'rgba(172,176,189, 1)',
+            legendFontColor: '#000',
+            legendFontSize: 15,
+          },
+          {
+            name: response.data.labels[2],
+            population: response.data.dataset.data[2],
             color: 'rgba(86, 143, 254, 1)',
             legendFontColor: '#000',
             legendFontSize: 15,
@@ -267,7 +274,7 @@ export default function Feelings() {
                   data={barChartData}
                   style={styles.charts}
                   width={screenWidth * 0.895}
-                  height={220}
+                  height={250}
                   chartConfig={chartConfig}
                   withHorizontalLabels={false}
                 />

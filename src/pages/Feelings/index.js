@@ -121,18 +121,20 @@ export default function Feelings() {
       .then((response) => {
         let data = {
           labels: response.data.labels,
-          legend: ['Positivo', 'Negativo'],
+          legend: ['Positivo', 'Neutro', 'Negativo'],
           data: [
             [
               response.data.dataset[0].data[0],
               response.data.dataset[1].data[0],
+              response.data.dataset[2].data[0]
             ],
             [
               response.data.dataset[0].data[1],
               response.data.dataset[1].data[1],
+              response.data.dataset[2].data[1]
             ],
           ],
-          barColors: ['#83DCE1', '#568FFE'],
+          barColors: ['#83DCE1', '#acb0bd', '#568FFE'],
         };
         setBarChartData(data);
         setIsFetchingBarChartData(false);

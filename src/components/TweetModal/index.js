@@ -2,8 +2,30 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
 
-const TweetModal = ({tweet}) => {
-  console.log(tweet);
+function getSentimento(tweet) {
+  switch (tweet.sentiment) {
+    case 'Positivo':
+      return (
+        <Text style={{ fontSize: 16, fontFamily: 'Nunito_400Regular' }}>
+          Positivo
+        </Text>
+      );
+    case 'Negativo':
+      return (
+        <Text style={{ fontSize: 16, fontFamily: 'Nunito_400Regular' }}>
+          Negativo
+        </Text>
+      );
+    case 'Neutro':
+      return (
+        <Text style={{ fontSize: 16, fontFamily: 'Nunito_400Regular' }}>
+          Neutro
+        </Text>
+      );
+  }
+}
+
+const TweetModal = ({ tweet }) => {
   return (
     <View style={styles.container}>
       <View style={styles.dataContainer}>
@@ -19,9 +41,7 @@ const TweetModal = ({tweet}) => {
         <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 16 }}>
           Sentimento:{' '}
         </Text>
-        <Text style={{ fontSize: 16, fontFamily: 'Nunito_400Regular' }}>
-          {tweet.sentiment ? 'Positivo' : 'Negativo'}
-        </Text>
+        {getSentimento(tweet)}
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
 
 function getSentimento(tweet) {
@@ -43,6 +43,28 @@ const TweetModal = ({ tweet }) => {
         </Text>
         {getSentimento(tweet)}
       </View>
+      <View
+        style={{
+          marginTop: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={{ fontFamily: 'Nunito_700Bold', fontSize: 18 }}>
+          Avalie nossa análise
+        </Text>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => Alert.alert('Obrigado pela avaliação!')}>
+            <Text style={styles.buttonText}>😃</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Alert.alert('Obrigado pela avaliação!')}>
+            <Text style={styles.buttonText}>😐</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Alert.alert('Obrigado pela avaliação!')}>
+            <Text style={styles.buttonText}>☹️</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -63,6 +85,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito_400Regular',
     fontSize: 18,
   },
+  buttonText: {
+    fontSize: 40, 
+    margin: 5
+  }
 });
 
 export default TweetModal;

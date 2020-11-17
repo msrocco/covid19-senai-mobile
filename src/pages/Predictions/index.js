@@ -162,9 +162,8 @@ export default function Predictions() {
     setTag(name.split(',')[0]);
     setDailyTag(name.split(',')[1]);
 
-    name.split(',')[2] === undefined 
-      ? setHideChart(true) 
-      : setHideChart(false); setDeathTag(name.split(',')[2]);
+    name.split(',')[2] === undefined ? setHideChart(true) : setHideChart(false);
+    setDeathTag(name.split(',')[2]);
   };
 
   const DeathChart = () => {
@@ -344,6 +343,25 @@ export default function Predictions() {
           )}
           {hideChart === true ? <View></View> : <DeathChart />}
         </View>
+        <View style={styles.infoContainer}>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={styles.infoTitle}>Informações Gerais</Text>
+          </View>
+          <Text style={styles.infoText}>
+            {'\t'}Os gráficos acima apresentam a análise preditiva da propagação
+            do COVID-19. O principal objetivo é fornecer previsões do número de
+            pessoas infectadas para os próximos 15, 30 e 60 dias e o desvio
+            padrão dos dados em relação ao modelo.
+          </Text>
+          <Text style={styles.infoText}>
+            {'\t'}Devido a natureza estacionária da epidemia, uma vez que o
+            número de contagiados é limitado ao número de habitantes, o modelo
+            de predição foi baseado na regressão logística, com o objetivo
+            científico de investigar um modelo que descreva a tendência da
+            epidemia e se os parâmetros de ajuste fornecem dados confiáveis de
+            predição.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -408,6 +426,25 @@ const styles = StyleSheet.create({
 
   legendaTxt: {
     fontFamily: 'Nunito_400Regular',
+  },
+
+  infoContainer: {
+    margin: 20,
+  },
+
+  infoTitle: {
+    fontSize: 18,
+    fontFamily: 'Nunito_700Bold',
+    color: '#1d253b',
+    marginBottom: 10,
+  },
+
+  infoText: {
+    textAlign: 'justify',
+    fontFamily: 'Nunito_400Regular',
+    fontSize: 14,
+    marginBottom: 20,
+    color: '#1d253b',
   },
 });
 

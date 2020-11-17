@@ -314,8 +314,7 @@ const styles = StyleSheet.create({
   },
 
   loader: {
-    marginTop: 20,
-    marginBottom: 70,
+    marginVertical: 20,
     alignItems: 'center',
   },
 

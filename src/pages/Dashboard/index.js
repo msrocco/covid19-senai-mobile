@@ -366,7 +366,7 @@ export default function Dashboard() {
                 fontFamily: 'Nunito_600SemiBold',
               }}
             >
-              Informações
+              Informações Gerais
             </Text>
             <Text
               style={{
@@ -377,7 +377,7 @@ export default function Dashboard() {
               }}
             >
               {' '}
-              Os dados apresentados nos gráficos são referentes a cidade de
+              {'\t'}Os dados apresentados nos gráficos são referentes a cidade de
               Londrina, PR - Brasil.
             </Text>
             <Text
@@ -388,7 +388,7 @@ export default function Dashboard() {
                 fontFamily: 'Nunito_400Regular',
               }}
             >
-              O número de casos confirmados e óbitos são oriundos dos boletins
+              {'\t'}O número de casos confirmados e óbitos são oriundos dos boletins
               da{' '}
               <Text
                 style={{ color: '#adb5bd', fontFamily: 'Nunito_700Bold' }}
@@ -411,7 +411,7 @@ export default function Dashboard() {
                 fontFamily: 'Nunito_400Regular',
               }}
             >
-              Dados de infectados por idade e por gênero são oriundos do sistema{' '}
+              {'\t'}Dados de infectados por idade e por gênero são oriundos do sistema{' '}
               <Text
                 style={{ color: '#adb5bd', fontFamily: 'Nunito_700Bold' }}
                 onPress={() => {
